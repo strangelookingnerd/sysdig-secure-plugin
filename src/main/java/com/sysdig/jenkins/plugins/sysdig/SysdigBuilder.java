@@ -21,7 +21,10 @@ import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.base.Strings;
 import hudson.*;
-import hudson.model.*;
+import hudson.model.AbstractProject;
+import hudson.model.Computer;
+import hudson.model.Run;
+import hudson.model.TaskListener;
 import hudson.security.ACL;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
@@ -200,6 +203,7 @@ public class SysdigBuilder extends Builder implements SimpleBuildStep, SysdigSca
   public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
     // Default job level config that may be used both by config.jelly and an instance of SysdigBuilder
 
+    //TODO All these default could be wiped out (make sure they are not used anymore)
     public static final String EMPTY_STRING = "";
     // Used in the jelly template
     public static final String DEFAULT_NAME = "sysdig_secure_images";

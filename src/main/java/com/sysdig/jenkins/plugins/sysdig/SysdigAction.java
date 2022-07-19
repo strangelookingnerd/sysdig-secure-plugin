@@ -17,11 +17,10 @@ package com.sysdig.jenkins.plugins.sysdig;
 
 import hudson.model.Action;
 import hudson.model.Run;
-
-import java.util.Map;
-
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Sysdig Secure plugin results for a given build are stored and subsequently retrieved from an instance of this class. Rendering/display of
@@ -44,6 +43,8 @@ public class SysdigAction implements Action {
   private Map<String, String> queries;
 
 
+  //TODO: the legacyEngine boolean could be dropped here at construction because it is mandatory only in "reading phase" to know
+  // on which engine reports were generated with
   public SysdigAction(Run<?, ?> build, String gateStatus, final String jenkinsOutputDirName, String gateReport, String gateSummary, String cveListingFileName, Boolean legacyEngine) {
     this.build = build;
     this.gateStatus = gateStatus;

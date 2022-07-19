@@ -22,11 +22,12 @@ import hudson.AbortException;
 import hudson.EnvVars;
 import hudson.remoting.Callable;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.jenkinsci.remoting.RoleChecker;
 
 import java.io.*;
-import java.net.*;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
