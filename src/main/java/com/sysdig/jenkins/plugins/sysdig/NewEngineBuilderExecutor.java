@@ -56,7 +56,7 @@ public class NewEngineBuilderExecutor {
     config.print(logger);
 
     BuildWorker worker = null;
-    Util.GATE_ACTION finalAction = null;
+    ScanningEvaluationUtils.GATE_ACTION finalAction = null;
     try {
 
       NewEngineScanner scanner = new NewEngineScanner(listener, config, workspace, envVars, logger);
@@ -89,7 +89,7 @@ public class NewEngineBuilderExecutor {
     /* Evaluate result of step based on gate action */
     if (null == finalAction) {
       logger.logInfo("Marking Sysdig Secure Container Image Scanner step as successful, no final result");
-    } else if ((config.getBailOnFail() || builder.getBailOnFail()) && Util.GATE_ACTION.FAIL.equals(finalAction)) {
+    } else if ((config.getBailOnFail() || builder.getBailOnFail()) && ScanningEvaluationUtils.GATE_ACTION.FAIL.equals(finalAction)) {
       logger.logWarn("Failing Sysdig Secure Container Image Scanner Plugin step due to final result " + finalAction);
       throw new AbortException("Failing Sysdig Secure Container Image Scanner Plugin step due to final result " + finalAction);
     } else {

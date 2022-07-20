@@ -311,6 +311,7 @@ public class SysdigBuilder extends Builder implements SimpleBuildStep, SysdigSca
       return forceinlinescan;
     }
 
+    //TODO: forceNewEngine flag could be removed
     public boolean getForceNewEngine() {
       return forceNewEngine;
     }

@@ -45,7 +45,7 @@ public class ReportConverterTests {
     results.add(new ImageScanningResult("foo-tag2", "foo-digest2", "pass", new JSONObject(), new JSONObject(), new JSONArray()));
 
     // Then
-    assertEquals(Util.GATE_ACTION.PASS, converter.getFinalAction(results));
+    assertEquals(ScanningEvaluationUtils.GATE_ACTION.PASS, converter.getFinalAction(results));
   }
 
   @Test
@@ -56,7 +56,7 @@ public class ReportConverterTests {
     results.add(new ImageScanningResult("foo-tag2", "foo-digest2", "fail", new JSONObject(), new JSONObject(), new JSONArray()));
 
     // Then
-    assertEquals(Util.GATE_ACTION.FAIL, converter.getFinalAction(results));
+    assertEquals(ScanningEvaluationUtils.GATE_ACTION.FAIL, converter.getFinalAction(results));
   }
 
   @Test

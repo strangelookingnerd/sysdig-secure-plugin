@@ -98,7 +98,7 @@ public class BuildWorker {
   }
 
   //TODO: the legacyEngine boolean could be removed?
-  public Util.GATE_ACTION scanAndBuildReports(String imageName, String dockerFile, String imageListName,Boolean legacyEngine) throws AbortException,InterruptedException {
+  public ScanningEvaluationUtils.GATE_ACTION scanAndBuildReports(String imageName, String dockerFile, String imageListName, Boolean legacyEngine) throws AbortException,InterruptedException {
     Map<String, String> imagesAndDockerfiles;
     if (!Strings.isNullOrEmpty(imageListName)) {
       imagesAndDockerfiles = this.readImagesAndDockerfilesFromPath(workspace, imageListName);
@@ -115,7 +115,7 @@ public class BuildWorker {
       throw new AbortException("Submit image(s) to sysdig-secure-engine for analysis before attempting policy evaluation");
     }
 
-    Util.GATE_ACTION finalAction = reportConverter.getFinalAction(scanResults);
+    ScanningEvaluationUtils.GATE_ACTION finalAction = reportConverter.getFinalAction(scanResults);
     logger.logInfo("Sysdig Secure Container Image Scanner Plugin step result - " + finalAction);
 
     try {
@@ -143,7 +143,7 @@ public class BuildWorker {
     return finalAction;
   }
 
-  private void setupBuildReports(Util.GATE_ACTION finalAction, JSONObject gateSummary, Boolean legacyEngine) throws AbortException {
+  private void setupBuildReports(ScanningEvaluationUtils.GATE_ACTION finalAction, JSONObject gateSummary, Boolean legacyEngine) throws AbortException {
     try {
       // store sysdig secure output json files using jenkins archiver (for remote storage as well)
       logger.logDebug("Archiving results");

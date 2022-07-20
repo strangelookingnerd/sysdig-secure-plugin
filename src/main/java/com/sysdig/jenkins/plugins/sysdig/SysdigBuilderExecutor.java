@@ -19,10 +19,7 @@ import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.base.Strings;
 import com.sysdig.jenkins.plugins.sysdig.log.ConsoleLog;
-import com.sysdig.jenkins.plugins.sysdig.scanner.BackendScanner;
-import com.sysdig.jenkins.plugins.sysdig.scanner.InlineScanner;
 import com.sysdig.jenkins.plugins.sysdig.scanner.NewEngineScanner;
-import com.sysdig.jenkins.plugins.sysdig.scanner.OldEngineScanner;
 import hudson.AbortException;
 import hudson.EnvVars;
 import hudson.FilePath;
@@ -58,7 +55,7 @@ public class SysdigBuilderExecutor {
     config.print(logger);
 
     BuildWorker worker = null;
-    Util.GATE_ACTION finalAction = null;
+    ScanningEvaluationUtils.GATE_ACTION finalAction = null;
 
     try {
       if (!globalConfig.getForceNewEngine()) {
@@ -74,6 +71,8 @@ public class SysdigBuilderExecutor {
         NewEngineScanner scanner = new NewEngineScanner(listener, newEngineBuildConfig, workspace, envVars, logger);
         ReportConverter reporter = new NewEngineReportConverter(logger);
         worker = new BuildWorker(run, workspace, listener, logger, scanner, reporter);
+        //TODO: check for sure if "old existing" reports are correctly displayed even without having the legacyEngine bool
+        // set (basically if the action keep its state)
         finalAction = worker.scanAndBuildReports(null, null, config.getImageListName(),false);
       }
     } catch (Exception e) {
@@ -101,7 +100,7 @@ public class SysdigBuilderExecutor {
     /* Evaluate result of step based on gate action */
     if (null == finalAction) {
       logger.logInfo("Marking Sysdig Secure Container Image Scanner step as successful, no final result");
-    } else if ((config.getBailOnFail() || builder.getBailOnFail()) && Util.GATE_ACTION.FAIL.equals(finalAction)) {
+    } else if ((config.getBailOnFail() || builder.getBailOnFail()) && ScanningEvaluationUtils.GATE_ACTION.FAIL.equals(finalAction)) {
       logger.logWarn("Failing Sysdig Secure Container Image Scanner Plugin step due to final result " + finalAction);
       throw new AbortException("Failing Sysdig Secure Container Image Scanner Plugin step due to final result " + finalAction);
     } else {

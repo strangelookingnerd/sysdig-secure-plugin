@@ -211,20 +211,20 @@ public class NewEngineReportConverter extends ReportConverter{
           logger.logInfo(String.format("Policy evaluation summary for %s - stop: %d (+%d whitelisted), warn: %d (+%d whitelisted), go: %d (+%d whitelisted), final: %s", repoTag, stop - stop_wl, stop_wl, warn - warn_wl, warn_wl, go - go_wl, go_wl, result.getString("final_action")));
 
           JSONObject summaryRow = new JSONObject();
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), repoTag);
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), repoTag);
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
           summaryRows.add(summaryRow);
         } else {
           logger.logInfo(String.format("Policy evaluation summary for %s - stop: %d (+%d whitelisted), warn: %d (+%d whitelisted), go: %d (+%d whitelisted), final: %s", imageKey, stop - stop_wl, stop_wl, warn - warn_wl, warn_wl, go - go_wl, go_wl, result.getString("final_action")));
           JSONObject summaryRow = new JSONObject();
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), imageKey.toString());
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), imageKey.toString());
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
           summaryRows.add(summaryRow);
 
           //console.logWarn("Repo_Tag element not found in gate output, skipping summary computation for " + imageKey);

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO: Rename all the "NewEngine" classes and interfaces to standard names
 public class NewEngineScanner implements ScannerInterface<JSONObject>  {
 
   protected final NewEngineBuildConfig config;

@@ -21,8 +21,8 @@ public class ReportConverter {
     this.logger = logger;
   }
 
-  public Util.GATE_ACTION getFinalAction(List<ImageScanningResult> results) throws AbortException {
-    Util.GATE_ACTION finalAction = Util.GATE_ACTION.PASS;
+  public ScanningEvaluationUtils.GATE_ACTION getFinalAction(List<ImageScanningResult> results) throws AbortException {
+    ScanningEvaluationUtils.GATE_ACTION finalAction = ScanningEvaluationUtils.GATE_ACTION.PASS;
 
     for (ImageScanningResult result : results) {
       String evalStatus = result.getEvalStatus();
@@ -30,7 +30,7 @@ public class ReportConverter {
       logger.logDebug(String.format("Get policy evaluation status for image '%s': %s", result.getTag(), evalStatus));
 
       if (!"pass".equals(evalStatus) && !"passed".equals(evalStatus)) {
-        finalAction = Util.GATE_ACTION.FAIL;
+        finalAction = ScanningEvaluationUtils.GATE_ACTION.FAIL;
       }
     }
 
@@ -178,20 +178,20 @@ public class ReportConverter {
           logger.logInfo(String.format("Policy evaluation summary for %s - stop: %d (+%d whitelisted), warn: %d (+%d whitelisted), go: %d (+%d whitelisted), final: %s", repoTag, stop - stop_wl, stop_wl, warn - warn_wl, warn_wl, go - go_wl, go_wl, result.getString("final_action")));
 
           JSONObject summaryRow = new JSONObject();
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), repoTag);
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), repoTag);
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
           summaryRows.add(summaryRow);
         } else {
           logger.logInfo(String.format("Policy evaluation summary for %s - stop: %d (+%d whitelisted), warn: %d (+%d whitelisted), go: %d (+%d whitelisted), final: %s", imageKey, stop - stop_wl, stop_wl, warn - warn_wl, warn_wl, go - go_wl, go_wl, result.getString("final_action")));
           JSONObject summaryRow = new JSONObject();
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), imageKey.toString());
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
-          summaryRow.put(Util.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Repo_Tag.toString(), imageKey.toString());
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Stop_Actions.toString(), (stop - stop_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Warn_Actions.toString(), (warn - warn_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Go_Actions.toString(), (go - go_wl));
+          summaryRow.put(ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.Final_Action.toString(), result.getString("final_action"));
           summaryRows.add(summaryRow);
 
           //console.logWarn("Repo_Tag element not found in gate output, skipping summary computation for " + imageKey);
@@ -211,7 +211,7 @@ public class ReportConverter {
 
   protected static JSONArray generateDataTablesColumnsForGateSummary() {
     JSONArray headers = new JSONArray();
-    for (Util.GATE_SUMMARY_COLUMN column : Util.GATE_SUMMARY_COLUMN.values()) {
+    for (ScanningEvaluationUtils.GATE_SUMMARY_COLUMN column : ScanningEvaluationUtils.GATE_SUMMARY_COLUMN.values()) {
       JSONObject header = new JSONObject();
       header.put("data", column.toString());
       header.put("title", column.toString().replaceAll("_", " "));
